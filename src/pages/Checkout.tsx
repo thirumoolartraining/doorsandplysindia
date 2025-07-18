@@ -189,8 +189,34 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
     }
   };
 
+  // Show success message if order was placed
+  if (orderSuccess) {
+    return (
+      <div className="min-h-screen bg-[#F5F5F5] font-inter antialiased">
+        <Navigation onNavigate={onNavigate} />
+        <main className="pt-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto text-center py-20">
+            <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-8" role="alert">
+              <p className="font-bold">Order Placed Successfully!</p>
+              <p>Thank you for ordering! Our team will get back to you shortly.</p>
+              <p className="mt-2">Your Order ID: <span className="font-semibold">{orderId}</span></p>
+            </div>
+            <h1 className="text-3xl font-bold text-[#4B3A2A] mb-4">Thank You for Your Order!</h1>
+            <p className="text-[#1A1A1A]/70 mb-8">We've received your order and will process it shortly. You'll receive a confirmation email with all the details.</p>
+            <button
+              onClick={() => onNavigate?.('home')}
+              className="bg-[#C3A572] hover:bg-[#B59460] text-white font-semibold py-3 px-8 rounded-full transition-colors duration-200"
+            >
+              Back to Home
+            </button>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   // Redirect to products if cart is empty
-  if (items.length === 0 && !orderSuccess) {
+  if (items.length === 0) {
     return (
       <div className="min-h-screen bg-[#F5F5F5] font-inter antialiased">
         <Navigation onNavigate={onNavigate} />
