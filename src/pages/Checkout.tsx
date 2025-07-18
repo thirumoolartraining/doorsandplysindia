@@ -151,6 +151,7 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
         const formIsValid = Object.keys(errors).length === 0;
         
         if (formIsValid) {
+          console.log('Submitting form data:', data);
           // Simulate network delay
           setTimeout(() => {
             // Generate order ID with timestamp
