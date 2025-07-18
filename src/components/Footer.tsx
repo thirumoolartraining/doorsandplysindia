@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from './Button';
 import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import { CONTACT_INFO } from '../constants/contact';
+import logo from '../../public/logo.png';
 
 interface FooterProps {
   onNavigate?: (page: 'privacy-policy' | 'terms-and-conditions' | 'shipping-policy' | 'cancellation-refund-policy' | 'home' | 'products' | 'export' | 'about' | 'contact') => void;
@@ -38,7 +39,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <h3 id="brand-heading" className="sr-only">Brand Information</h3>
             <div className="flex items-center">
               <img 
-                src="/logo.png" 
+                src={logo} 
                 alt="Doors & Plys India Logo" 
                 className="h-10 w-auto object-contain"
                 onError={(e) => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 import { Button } from './Button';
 import { useCartStore } from '../store/cart';
+import logo from '../../public/logo.png';
 
 interface NavigationProps {
   onNavigate?: (page: 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'contact', productId?: string) => void;
@@ -33,7 +34,7 @@ export const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
               onClick={() => onNavigate?.('home')}
             >
               <img 
-                src="/logo.png" 
+                src={logo} 
                 alt="Doors & Plys India Logo" 
                 className="h-full w-auto object-contain"
                 onError={(e) => {
