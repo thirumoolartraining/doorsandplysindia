@@ -38,9 +38,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <h3 id="brand-heading" className="sr-only">Brand Information</h3>
             <div className="flex items-center">
               <img 
-                src="/logo.png" 
+                src={`${import.meta.env.BASE_URL}logo.png`} 
                 alt="Doors & Plys India Logo" 
                 className="h-10 w-auto object-contain"
+                onError={(e) => {
+                  console.error('Failed to load logo from:', e.currentTarget.src);
+                }}
               />
             </div>
             <p className="text-white/80 text-sm">

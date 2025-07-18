@@ -22,9 +22,12 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
       <div className="absolute top-8 left-8 z-20">
         <div className="bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-xl">
           <img 
-            src="/logo.png" 
+            src={`${import.meta.env.BASE_URL}logo.png`} 
             alt="Doors & Plys India Logo" 
             className="h-12 w-auto object-contain"
+            onError={(e) => {
+              console.error('Failed to load logo from:', e.currentTarget.src);
+            }}
           />
         </div>
       </div>

@@ -33,9 +33,12 @@ export const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
               onClick={() => onNavigate?.('home')}
             >
               <img 
-                src="/logo.png" 
+                src={`${import.meta.env.BASE_URL}logo.png`} 
                 alt="Doors & Plys India Logo" 
                 className="h-full w-auto object-contain"
+                onError={(e) => {
+                  console.error('Failed to load logo from:', e.currentTarget.src);
+                }}
               />
             </div>
           </div>
