@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Accessibility and readability improvements */
+@layer base {
+  /* Improved focus indicators */
+  *:focus {
+    @apply outline-none ring-2 ring-[#C3A572] ring-offset-2 ring-offset-white;
+  }
+  
+  /* Better focus for interactive elements */
+  button:focus,
+  a:focus,
+  input:focus,
+  textarea:focus,
+  select:focus {
+    @apply ring-2 ring-[#C3A572] ring-offset-2;
+  }
+  
+  /* Improved text selection */
+  ::selection {
+    @apply bg-[#C3A572]/30 text-[#1a1a1a];
+  }
+  
+  /* Better spacing for readability */
+  p {
+    @apply mb-4 leading-relaxed;
+  }
+  
+  /* Improved heading hierarchy */
+  h1 {
+    @apply text-4xl sm:text-5xl font-bold leading-tight mb-6 text-accessible-text-primary;
+  }
+  
+  h2 {
+    @apply text-3xl sm:text-4xl font-bold leading-tight mb-5 text-accessible-text-primary;
+  }
+  
+  h3 {
+    @apply text-2xl sm:text-3xl font-semibold leading-tight mb-4 text-accessible-text-primary;
+  }
+  
+  h4 {
+    @apply text-xl sm:text-2xl font-semibold leading-tight mb-3 text-accessible-text-primary;
+  }
+  
+  h5 {
+    @apply text-lg sm:text-xl font-medium leading-tight mb-3 text-accessible-text-primary;
+  }
+  
+  h6 {
+    @apply text-base sm:text-lg font-medium leading-tight mb-2 text-accessible-text-primary;
+  }
+  
+  /* Better list spacing */
+  ul, ol {
+    @apply mb-4 space-y-2;
+  }
+  
+  li {
+    @apply leading-relaxed;
+  }
+  
+  /* Improved link accessibility */
+  a {
+    @apply underline decoration-2 underline-offset-2 hover:decoration-[#C3A572] transition-colors;
+  }
+  
+  /* Better form element spacing */
+  label {
+    @apply mb-2 block font-medium text-accessible-text-primary;
+  }
+  
+  input, textarea, select {
+    @apply mb-4;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-text-primary: #000000;
+    --color-text-secondary: #333333;
+    --color-bg-primary: #ffffff;
+    --color-accent: #0066cc;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Dyslexia-friendly improvements */
+@media (prefers-reduced-motion: no-preference) {
+  .dyslexia-friendly {
+    font-family: 'OpenDyslexic', 'Comic Sans MS', cursive;
+    letter-spacing: 0.12em;
+    word-spacing: 0.16em;
+    line-height: 1.8;
+  }
+}
+
+/* Print styles for better accessibility */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+  
+  a[href]:after {
+    content: " (" attr(href) ")";
+  }
+}
