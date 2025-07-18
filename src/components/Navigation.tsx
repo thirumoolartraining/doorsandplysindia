@@ -33,7 +33,7 @@ export const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
               onClick={() => onNavigate?.('home')}
             >
               <img 
-                src={`${import.meta.env.BASE_URL}logo.png`} 
+                src="/logo.png" 
                 alt="Doors & Plys India Logo" 
                 className="h-full w-auto object-contain"
                 onError={(e) => {
