@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -13,12 +13,13 @@ import { FormInput } from '../components/FormInput';
 import { FormTextarea } from '../components/FormTextarea';
 import { FormCheckbox } from '../components/FormCheckbox';
 import { LoadingButton } from '../components/LoadingButton';
-import { Alert } from '../components/Alert';
 import { ExportBadge } from '../components/ExportBadge';
 import { ProductsFooter } from '../components/ProductsFooter';
 import { useCartStore } from '../store/cart';
 import { Minus, Plus, X, Shield, Truck, Award } from 'lucide-react';
 import { CONTACT_INFO } from '../constants/contact';
+
+type NavigationPage = 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'contact' | 'shipping-policy' | 'cancellation-refund-policy';
 
 const checkoutSchema = z.object({
   firstName: z.string().min(2, 'First name must be at least 2 characters'),
@@ -38,7 +39,7 @@ const checkoutSchema = z.object({
 type CheckoutFormData = z.infer<typeof checkoutSchema>;
 
 interface CheckoutProps {
-  onNavigate?: (page: 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout', productId?: string) => void;
+  onNavigate?: (page: NavigationPage, productId?: string) => void;
 }
 
 export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
@@ -50,6 +51,15 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
   const { items, updateQuantity, removeFromCart, getTotalPrice, clearCart } = useCartStore();
   const totalPrice = getTotalPrice();
 
+  // Load saved form data from localStorage on component mount
+  const loadFormData = (): Partial<CheckoutFormData> => {
+    if (typeof window !== 'undefined') {
+      const savedData = localStorage.getItem('checkoutFormData');
+      return savedData ? JSON.parse(savedData) : { billingAddressSame: true };
+    }
+    return { billingAddressSame: true };
+  };
+
   const {
     register,
     handleSubmit,
@@ -57,10 +67,62 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
     formState: { errors },
   } = useForm<CheckoutFormData>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: {
-      billingAddressSame: true,
-    },
+    defaultValues: loadFormData(),
   });
+
+  // Helper function to register form inputs with proper typing
+  const registerInput = (name: keyof CheckoutFormData, required = true) => {
+    const { ref, onChange, onBlur, ...rest } = register(name, { required });
+    return {
+      ...rest,
+      name,
+      required,
+      ref,
+      onChange: (e: React.ChangeEvent<HTMLInputElement> | string) => {
+        // Handle both string and event inputs
+        const event = typeof e === 'string' ? { target: { value: e } } as React.ChangeEvent<HTMLInputElement> : e;
+        
+        // Call the original onChange from react-hook-form
+        onChange(event);
+        
+        // Update local storage
+        if (typeof window !== 'undefined') {
+          const formValues = watch();
+          localStorage.setItem('checkoutFormData', JSON.stringify(formValues));
+        }
+      },
+      onBlur: (e: React.FocusEvent<HTMLInputElement>) => {
+        onBlur(e);
+      },
+    };
+  };
+
+  // Helper function to register textareas with proper typing
+  const registerTextarea = (name: keyof CheckoutFormData, required = true) => {
+    const { ref, onChange, onBlur, ...rest } = register(name, { required });
+    return {
+      ...rest,
+      name,
+      required,
+      ref,
+      onChange: (e: React.ChangeEvent<HTMLTextAreaElement> | string) => {
+        // Handle both string and event inputs
+        const event = typeof e === 'string' ? { target: { value: e } } as React.ChangeEvent<HTMLTextAreaElement> : e;
+        
+        // Call the original onChange from react-hook-form
+        onChange(event);
+        
+        // Update local storage
+        if (typeof window !== 'undefined') {
+          const formValues = watch();
+          localStorage.setItem('checkoutFormData', JSON.stringify(formValues));
+        }
+      },
+      onBlur: (e: React.FocusEvent<HTMLTextAreaElement>) => {
+        onBlur(e);
+      },
+    };
+  };
 
   const billingAddressSame = watch('billingAddressSame');
 
@@ -71,24 +133,56 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
 
   const steps = ['Cart Review', 'Shipping Info', 'Payment'];
 
+  // Save form data to localStorage when form values change
+  const formValues = watch();
+  useEffect(() => {
+    if (Object.keys(formValues).length > 0) {
+      localStorage.setItem('checkoutFormData', JSON.stringify(formValues));
+    }
+  }, [formValues]);
+
   const onSubmit = async (data: CheckoutFormData) => {
     setIsSubmitting(true);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Simulate API call with validation
+      await new Promise<void>((resolve, reject) => {
+        // Check if there are any validation errors
+        const formIsValid = Object.keys(errors).length === 0;
+        
+        if (formIsValid) {
+          // Simulate network delay
+          setTimeout(() => {
+            // Generate order ID with timestamp
+            const newOrderId = `DP${Date.now().toString().slice(-6)}`;
+            setOrderId(newOrderId);
+            setOrderSuccess(true);
+            
+            // Clear cart and saved form data on successful submission
+            clearCart();
+            
+            // Clear saved form data from localStorage
+            if (typeof window !== 'undefined') {
+              localStorage.removeItem('checkoutFormData');
+            }
+            
+            // Show success message
+            toast.success('Order placed successfully!');
+            
+            resolve();
+          }, 2000);
+        } else {
+          // If there are validation errors, reject the promise
+          reject(new Error('Form validation failed'));
+        }
+      });
       
-      // Generate order ID
-      const newOrderId = `DP${Date.now().toString().slice(-6)}`;
-      setOrderId(newOrderId);
-      setOrderSuccess(true);
-      
-      // Clear cart
-      clearCart();
-      
-      toast.success('Order placed successfully!');
     } catch (error) {
-      toast.error('Failed to place order. Please try again.');
+      // Don't show error toast for validation errors as they're already shown inline
+      if (error instanceof Error && error.message !== 'Form validation failed') {
+        console.error('Order submission error:', error);
+        toast.error('Failed to place order. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -214,43 +308,37 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
                       <FormInput
                         label="First Name"
                         placeholder="Enter your first name"
-                        {...register('firstName')}
+                        {...registerInput('firstName')}
                         error={errors.firstName?.message}
-                        required
                       />
                     </div>
-                    
                     <div>
                       <FormInput
                         label="Last Name"
                         placeholder="Enter your last name"
-                        {...register('lastName')}
+                        {...registerInput('lastName')}
                         error={errors.lastName?.message}
-                        required
                       />
                     </div>
                   </div>
-
+                  
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <FormInput
                         label="Email Address"
                         type="email"
                         placeholder="your.email@example.com"
-                        {...register('email')}
+                        {...registerInput('email')}
                         error={errors.email?.message}
-                        required
                       />
                     </div>
-                    
                     <div>
                       <FormInput
                         label="Phone Number"
                         type="tel"
                         placeholder="+1 (555) 123-4567"
-                        {...register('phone')}
+                        {...registerInput('phone')}
                         error={errors.phone?.message}
-                        required
                       />
                     </div>
                   </div>
@@ -267,9 +355,8 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
                       <FormTextarea
                         label="Street Address"
                         placeholder="Enter your full address"
-                        {...register('address')}
+                        {...registerTextarea('address')}
                         error={errors.address?.message}
-                        required
                         rows={2}
                       />
                     </div>
@@ -279,9 +366,8 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
                         <FormInput
                           label="City"
                           placeholder="City"
-                          {...register('city')}
+                          {...registerInput('city')}
                           error={errors.city?.message}
-                          required
                         />
                       </div>
                       
@@ -289,9 +375,8 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
                         <FormInput
                           label="State/Province"
                           placeholder="State"
-                          {...register('state')}
+                          {...registerInput('state')}
                           error={errors.state?.message}
-                          required
                         />
                       </div>
                       
@@ -299,9 +384,8 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
                         <FormInput
                           label="ZIP/Postal Code"
                           placeholder="ZIP Code"
-                          {...register('zipCode')}
+                          {...registerInput('zipCode')}
                           error={errors.zipCode?.message}
-                          required
                         />
                       </div>
                     </div>
@@ -310,9 +394,8 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
                       <FormInput
                         label="Country"
                         placeholder="Country"
-                        {...register('country')}
+                        {...registerInput('country')}
                         error={errors.country?.message}
-                        required
                       />
                     </div>
                   </div>
@@ -335,9 +418,8 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
                         <FormTextarea
                           label="Billing Address"
                           placeholder="Enter your billing address"
-                          {...register('billingAddress')}
+                          {...registerTextarea('billingAddress', false)}
                           error={errors.billingAddress?.message}
-                          required
                           rows={3}
                         />
                       </div>
@@ -355,7 +437,7 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
                     <FormTextarea
                       label="Delivery Instructions (Optional)"
                       placeholder="Any special delivery instructions or notes..."
-                      {...register('specialInstructions')}
+                      {...registerTextarea('specialInstructions', false)}
                       rows={3}
                     />
                   </div>

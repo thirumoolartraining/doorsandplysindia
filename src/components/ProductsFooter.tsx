@@ -2,15 +2,17 @@ import React from 'react';
 import { Button } from './Button';
 import { Home, Package, Phone, Settings, Share2 } from 'lucide-react';
 
+type NavigationPage = 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'contact' | 'shipping-policy' | 'cancellation-refund-policy';
+
 interface ProductsFooterProps {
-  onNavigate?: (page: 'home' | 'products' | 'product-detail' | 'export', productId?: string) => void;
+  onNavigate?: (page: NavigationPage, productId?: string) => void;
 }
 
 export const ProductsFooter: React.FC<ProductsFooterProps> = ({ onNavigate }) => {
   const quickLinks = [
     { icon: Home, label: 'Home', action: () => onNavigate?.('home') },
     { icon: Package, label: 'Products', action: () => onNavigate?.('products') },
-    { icon: Phone, label: 'Contact', action: () => {} }
+    { icon: Phone, label: 'Contact', action: () => onNavigate?.('contact') }
   ];
 
   return (
