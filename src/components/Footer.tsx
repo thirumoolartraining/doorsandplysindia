@@ -10,11 +10,11 @@ interface FooterProps {
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const quickLinks = [
-    { label: 'Home', href: '#' },
-    { label: 'Products', href: '#' },
-    { label: 'Export', href: '#' },
-    { label: 'About', href: '#' },
-    { label: 'Contact', href: '#' }
+    { label: 'Home', page: 'home' },
+    { label: 'Products', page: 'products' },
+    { label: 'Export', page: 'export' },
+    { label: 'About', page: 'about' },
+    { label: 'Contact', page: 'contact' }
   ];
   const legalLinks = ['Privacy Policy', 'Terms of Service', 'Shipping Policy', 'Return Policy'];
   
@@ -72,9 +72,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <a href="#" className="text-white/80 hover:text-white transition-colors">
+                  <button 
+                    onClick={() => onNavigate?.(link.page as any)}
+                    className="text-white/80 hover:text-white transition-colors text-left w-full"
+                  >
                     {link.label}
-                  </a>
+                  </button>
                 </li>
               ))}
             </ul>

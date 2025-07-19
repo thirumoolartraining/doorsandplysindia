@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { CartDrawer } from './components/CartDrawer';
 import { Toast } from './components/Toast';
 import { Navigation } from './components/Navigation';
@@ -21,6 +21,7 @@ import { TermsAndConditions } from './pages/TermsAndConditions';
 import { ShippingPolicy } from './pages/ShippingPolicy';
 import { CancellationRefundPolicy } from './pages/CancellationRefundPolicy';
 import { Contact } from './pages/Contact';
+import { ScrollToTop, ScrollToTopButton } from './components/ScrollToTop';
 
 function App() {
   const [currentPage, setCurrentPage] = useState<'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'shipping-policy' | 'cancellation-refund-policy' | 'contact'>('home');
@@ -76,6 +77,8 @@ function App() {
   return (
     <>
       {/* Global components that should appear on all pages */}
+      <ScrollToTop />
+      <ScrollToTopButton />
       <CartDrawer onNavigate={navigateTo} />
       <Toast />
       
