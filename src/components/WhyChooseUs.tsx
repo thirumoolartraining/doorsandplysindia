@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from './Card';
 import { Globe, Award, Package, Settings } from 'lucide-react';
+import { Container } from './Container';
 
 export const WhyChooseUs: React.FC = () => {
   const stats = [
@@ -31,13 +32,13 @@ export const WhyChooseUs: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accessible-text-primary mb-6 tracking-tight max-w-4xl mx-auto">
+    <section className="py-20">
+      <Container size="7xl" padding="md">
+        <div className="text-center mb-16 max-w-4xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accessible-text-primary mb-6 tracking-tight">
             Your Reliable UPVC Door Supply Partner
           </h2>
-          <p className="text-xl text-accessible-text-secondary max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-accessible-text-secondary leading-relaxed">
             Trusted by importers worldwide for consistent quality, competitive pricing, and professional export services
           </p>
         </div>
@@ -60,7 +61,7 @@ export const WhyChooseUs: React.FC = () => {
             </Card>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

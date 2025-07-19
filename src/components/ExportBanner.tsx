@@ -1,11 +1,12 @@
 import React from 'react';
 import { Alert } from './Alert';
 import { Button } from './Button';
+import { Container } from './Container';
 
 export const ExportBanner: React.FC = () => {
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <section className="py-12">
+      <Container size="4xl" padding="md">
         <Alert variant="warning" className="shadow-lg">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="text-center sm:text-left">
@@ -17,7 +18,7 @@ export const ExportBanner: React.FC = () => {
             </Button>
           </div>
         </Alert>
-      </div>
+      </Container>
     </section>
   );
 };

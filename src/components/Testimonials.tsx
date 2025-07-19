@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from './Card';
 import { Star } from 'lucide-react';
+import { Container } from './Container';
 
 export const Testimonials: React.FC = () => {
   const testimonials = [
@@ -25,13 +26,13 @@ export const Testimonials: React.FC = () => {
   ];
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#F5F5F5]">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
+    <section className="py-20 bg-[#F5F5F5]">
+      <Container size="7xl" padding="md">
+        <div className="text-center mb-16 max-w-4xl mx-auto">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#4B3A2A] mb-6 tracking-tight">
             Trusted by Importers Worldwide
           </h2>
-          <p className="text-xl text-[#1A1A1A]/70 max-w-2xl mx-auto">
+          <p className="text-xl text-[#1A1A1A]/70">
             Real feedback from our international partners and distributors
           </p>
         </div>
@@ -58,7 +59,7 @@ export const Testimonials: React.FC = () => {
             </Card>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

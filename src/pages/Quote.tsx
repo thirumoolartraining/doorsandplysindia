@@ -6,9 +6,12 @@ import { QuoteForm } from '../components/QuoteForm';
 import { TrustIndicators } from '../components/TrustIndicators';
 import { AlternativeContact } from '../components/AlternativeContact';
 import { ProductsFooter } from '../components/ProductsFooter';
+import { Container } from '../components/Container';
+
+type NavigationPage = 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'contact' | 'shipping-policy' | 'cancellation-refund-policy';
 
 interface QuoteProps {
-  onNavigate?: (page: 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about', productId?: string) => void;
+  onNavigate?: (page: NavigationPage, productId?: string) => void;
 }
 
 export const Quote: React.FC<QuoteProps> = ({ onNavigate }) => {
@@ -23,18 +26,22 @@ export const Quote: React.FC<QuoteProps> = ({ onNavigate }) => {
       
       {/* Main Content */}
       <main role="main" className="pt-20">
-        {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto pt-8">
-          <Breadcrumb items={breadcrumbItems} />
-        </nav>
+        <Container size="7xl" padding="md" className="pt-8">
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="mb-8">
+            <Breadcrumb items={breadcrumbItems} />
+          </nav>
+        </Container>
 
         {/* Hero Section */}
         <QuoteHero />
 
         {/* Form Section */}
-        <section aria-labelledby="quote-form-section" className="py-16 px-4 sm:px-6 lg:px-8">
+        <section aria-labelledby="quote-form-section" className="py-16">
           <h2 id="quote-form-section" className="sr-only">Quote Request Form</h2>
-          <QuoteForm />
+          <Container size="7xl" padding="md">
+            <QuoteForm />
+          </Container>
         </section>
 
         {/* Trust Indicators */}

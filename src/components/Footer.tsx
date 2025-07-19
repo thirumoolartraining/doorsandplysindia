@@ -3,6 +3,7 @@ import { Button } from './Button';
 import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import { CONTACT_INFO } from '../constants/contact';
 import logo from '../../public/logo.png';
+import { Container } from './Container';
 
 interface FooterProps {
   onNavigate?: (page: 'privacy-policy' | 'terms-and-conditions' | 'shipping-policy' | 'cancellation-refund-policy' | 'home' | 'products' | 'export' | 'about' | 'contact') => void;
@@ -31,8 +32,8 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   };
 
   return (
-    <footer role="contentinfo" className="bg-[#4B3A2A] text-white pt-16 pb-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <footer role="contentinfo" className="bg-[#4B3A2A] text-white pt-16 pb-8">
+      <Container size="7xl" padding="md">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand */}
           <section aria-labelledby="brand-heading" className="space-y-4">
@@ -137,7 +138,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 };

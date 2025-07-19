@@ -16,6 +16,7 @@ import { LoadingButton } from '../components/LoadingButton';
 import { ExportBadge } from '../components/ExportBadge';
 import { ProductsFooter } from '../components/ProductsFooter';
 import { useCartStore } from '../store/cart';
+import { Container } from '../components/Container';
 import { Minus, Plus, X, Shield, Truck, Award } from 'lucide-react';
 import { CONTACT_INFO } from '../constants/contact';
 
@@ -294,10 +295,10 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
       <Navigation onNavigate={onNavigate} />
       
       {/* Main Content */}
-      <main role="main" className="pt-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
+      <main role="main" className="pt-20">
+        <Container size="7xl" padding="md" className="py-8">
           {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="pt-8">
+          <nav aria-label="Breadcrumb" className="mb-8">
             <Breadcrumb items={breadcrumbItems} />
           </nav>
 
@@ -592,9 +593,9 @@ export const Checkout: React.FC<CheckoutProps> = ({ onNavigate }) => {
               </Card>
             </aside>
           </section>
-        </div>
+        </Container>
       </main>
-
+      
       <ProductsFooter onNavigate={onNavigate} />
     </div>
   );

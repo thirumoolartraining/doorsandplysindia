@@ -4,13 +4,17 @@ import { Navigation } from '../components/Navigation';
 import { Breadcrumb } from '../components/Breadcrumb';
 import { ProductsHeader } from '../components/ProductsHeader';
 import { ProductGrid } from '../components/ProductGrid';
+import { WhyChooseUs } from '../components/WhyChooseUs';
 import { ProductsFooter } from '../components/ProductsFooter';
 import { useCartStore } from '../store/cart';
 import { products } from '../data/products';
 import toast from 'react-hot-toast';
+import { Container } from '../components/Container';
+
+type PageType = 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'shipping-policy' | 'cancellation-refund-policy' | 'contact';
 
 interface ProductsProps {
-  onNavigate?: (page: 'home' | 'products' | 'product-detail' | 'export', productId?: string) => void;
+  onNavigate?: (page: PageType, productId?: string) => void;
 }
 
 export const Products: React.FC<ProductsProps> = ({ onNavigate }) => {
@@ -64,10 +68,10 @@ export const Products: React.FC<ProductsProps> = ({ onNavigate }) => {
       <Navigation onNavigate={onNavigate} />
       
       {/* Main Content */}
-      <main role="main" className="pt-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-[#F5F5F5] via-white/50 to-[#F5F5F5]">
-        <div className="max-w-7xl mx-auto">
+      <main role="main" className="pt-20 bg-gradient-to-br from-[#F5F5F5] via-white/50 to-[#F5F5F5]">
+        <Container size="7xl" padding="md" className="pt-8">
           {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="pt-8 mb-4">
+          <nav aria-label="Breadcrumb" className="mb-4">
             <Breadcrumb items={breadcrumbItems} />
           </nav>
 
@@ -140,7 +144,7 @@ export const Products: React.FC<ProductsProps> = ({ onNavigate }) => {
               filteredProducts={filteredProducts}
             />
           </section>
-        </div>
+        </Container>
       </main>
 
       <ProductsFooter onNavigate={onNavigate} />

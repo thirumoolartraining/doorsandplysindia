@@ -8,9 +8,12 @@ import { FactoryGallery } from '../components/FactoryGallery';
 import { Certifications } from '../components/Certifications';
 import { AboutCTA } from '../components/AboutCTA';
 import { ProductsFooter } from '../components/ProductsFooter';
+import { Container } from '../components/Container';
+
+type NavigationPage = 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'contact' | 'shipping-policy' | 'cancellation-refund-policy';
 
 interface AboutProps {
-  onNavigate?: (page: 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about', productId?: string) => void;
+  onNavigate?: (page: NavigationPage, productId?: string) => void;
 }
 
 export const About: React.FC<AboutProps> = ({ onNavigate }) => {
@@ -30,9 +33,9 @@ export const About: React.FC<AboutProps> = ({ onNavigate }) => {
       {/* Main Content */}
       <main role="main" className="pt-20">
         {/* Breadcrumb */}
-        <nav aria-label="Breadcrumb" className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto pt-8">
+        <Container size="7xl" padding="md" className="pt-8">
           <Breadcrumb items={breadcrumbItems} />
-        </nav>
+        </Container>
 
         {/* Hero Section */}
         <AboutHero onNavigate={handleNavigateToQuote} />

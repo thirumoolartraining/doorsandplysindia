@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card } from './Card';
 import { DoorOpen as Door, Move, Home, Layers } from 'lucide-react';
+import { Container } from './Container';
 
 type PageType = 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'shipping-policy' | 'cancellation-refund-policy' | 'contact';
 
@@ -41,13 +42,13 @@ export const ProductCategories: React.FC<ProductCategoriesProps> = ({ onNavigate
   ];
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 font-inter">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-20">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accessible-text-primary mb-8 tracking-tight leading-tight max-w-4xl mx-auto">
+    <section className="py-24 font-inter">
+      <Container size="7xl" padding="md">
+        <div className="text-center mb-20 max-w-4xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-accessible-text-primary mb-8 tracking-tight leading-tight">
             Export-Grade UPVC Door Solutions
           </h2>
-          <p className="text-xl text-accessible-text-secondary max-w-3xl mx-auto font-medium leading-relaxed">
+          <p className="text-xl text-accessible-text-secondary font-medium leading-relaxed">
             CE-certified UPVC doors engineered for international markets with container-ready packaging.
           </p>
         </div>
@@ -74,7 +75,7 @@ export const ProductCategories: React.FC<ProductCategoriesProps> = ({ onNavigate
             </Card>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 };

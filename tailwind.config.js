@@ -2,7 +2,20 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: '1rem',
+        sm: '1.5rem',
+        lg: '2rem',
+      },
+    },
     extend: {
+      maxWidth: {
+        '8xl': '88rem',   // 1408px
+        '9xl': '96rem',   // 1536px
+        'prose': '65ch',  // For optimal reading width
+      },
       fontFamily: {
         'sans': ['Manrope', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
         'display': ['Sora', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
