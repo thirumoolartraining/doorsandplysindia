@@ -102,22 +102,22 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Contact Info */}
           <section aria-labelledby="contact-info-heading">
-            <h4 className="text-lg font-semibold mb-4">Contact Info</h4>
-            <address className="space-y-2 text-white/80 not-italic">
-              <p className="text-sm">{CONTACT_INFO.address.line1}</p>
-              <p className="text-sm">{CONTACT_INFO.address.line2}</p>
-              <p className="text-sm">{CONTACT_INFO.address.line3}</p>
+            <h4 className="text-lg font-semibold mb-4 text-white">Contact Info</h4>
+            <address className="space-y-2 text-white not-italic">
+              <p className="text-sm text-white">{CONTACT_INFO.address.line1}</p>
+              <p className="text-sm text-white">{CONTACT_INFO.address.line2}</p>
+              <p className="text-sm text-white">{CONTACT_INFO.address.line3}</p>
               <p className="mt-3">
-                <a href={`tel:${CONTACT_INFO.phone}`} className="hover:text-white transition-colors">
-                  📞 {CONTACT_INFO.phone}
+                <a href={`tel:${CONTACT_INFO.phone}`} className="text-white hover:opacity-80 transition-opacity no-underline">
+                  {CONTACT_INFO.phone}
                 </a>
               </p>
               <p>
-                <a href={`mailto:${CONTACT_INFO.email}`} className="hover:text-white transition-colors">
-                  📧 {CONTACT_INFO.email}
+                <a href={`mailto:${CONTACT_INFO.email}`} className="text-white hover:opacity-80 transition-opacity no-underline">
+                  {CONTACT_INFO.email}
                 </a>
               </p>
-              <p>🌍 Export Inquiries Welcome</p>
+              <p className="text-white">🌍 Export Inquiries Welcome</p>
             </address>
           </section>
         </div>

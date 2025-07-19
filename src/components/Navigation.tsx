@@ -23,7 +23,7 @@ export const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
   ];
 
   return (
-    <header role="banner" className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-md border-b border-white/20 font-inter">
+    <header role="banner" className="fixed top-0 left-0 right-0 z-50 bg-white/10 backdrop-blur-md border-b border-white/20">
       <nav role="navigation" aria-label="Main navigation">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">

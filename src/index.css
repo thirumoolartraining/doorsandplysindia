@@ -1,9 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Sora:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Accessibility and readability improvements */
+/* Base typography and global styles */
 @layer base {
+  :root {
+    --font-sans: 'Manrope', system-ui, -apple-system, sans-serif;
+    --font-display: 'Sora', system-ui, -apple-system, sans-serif;
+  }
+  
+  html {
+    @apply font-sans text-[16px] text-gray-900 antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply min-h-screen bg-white text-gray-900 leading-relaxed;
+  }
   /* Improved focus indicators */
   *:focus {
     @apply outline-none ring-2 ring-[#C3A572] ring-offset-2 ring-offset-white;
@@ -28,29 +46,59 @@
     @apply mb-4 leading-relaxed;
   }
   
-  /* Improved heading hierarchy */
+  /* Typography Scale with Sora for headings */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold tracking-tight text-gray-900;
+    line-height: 1.2;
+  }
+  
   h1 {
-    @apply text-4xl sm:text-5xl font-bold leading-tight mb-6 text-accessible-text-primary;
+    @apply text-4xl sm:text-5xl md:text-6xl mb-6;
+    letter-spacing: -0.02em;
   }
   
   h2 {
-    @apply text-3xl sm:text-4xl font-bold leading-tight mb-5 text-accessible-text-primary;
+    @apply text-3xl sm:text-4xl md:text-5xl mb-6;
+    letter-spacing: -0.015em;
   }
   
   h3 {
-    @apply text-2xl sm:text-3xl font-semibold leading-tight mb-4 text-accessible-text-primary;
+    @apply text-2xl sm:text-3xl mb-5;
+    letter-spacing: -0.01em;
   }
   
   h4 {
-    @apply text-xl sm:text-2xl font-semibold leading-tight mb-3 text-accessible-text-primary;
+    @apply text-xl sm:text-2xl mb-4;
   }
   
   h5 {
-    @apply text-lg sm:text-xl font-medium leading-tight mb-3 text-accessible-text-primary;
+    @apply text-lg sm:text-xl mb-3 font-semibold;
   }
   
   h6 {
-    @apply text-base sm:text-lg font-medium leading-tight mb-2 text-accessible-text-primary;
+    @apply text-base font-semibold mb-2 text-gray-600;
+  }
+  
+  /* Paragraph and text styles with Manrope */
+  p, li, a, button, input, textarea, select, label, span {
+    @apply font-sans text-gray-700 leading-relaxed;
+  }
+  
+  p {
+    @apply mb-4;
+  }
+  
+  /* Text variants */
+  .text-lead {
+    @apply text-lg sm:text-xl text-gray-700 leading-relaxed;
+  }
+  
+  .text-muted {
+    @apply text-gray-500;
+  }
+  
+  .text-small {
+    @apply text-sm text-gray-600;
   }
   
   /* Better list spacing */

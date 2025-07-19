@@ -1,0 +1,56 @@
+{
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "html"
+  },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "tailwindCSS.experimental.classRegex": [
+    "class[\\\"'`]([^\\\"'`]*)[\\\"'`]",
+    "class[\\\"'`]((?:[^\\\"'`]|\\\\\\\"|\\\\'|\\\\`)*)[\\\"'`]"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.inlineSuggest.enabled": true,
+  "editor.suggest": {
+    "showWords": false,
+    "showSnippets": false,
+    "showClasses": true,
+    "showColors": true,
+    "showConstants": true,
+    "showEnums": true,
+    "showFields": true,
+    "showFiles": true,
+    "showFolders": true,
+    "showFunctions": true,
+    "showInterfaces": true,
+    "showIssues": true,
+    "showKeywords": true,
+    "showMethods": true,
+    "showModules": true,
+    "showOperators": true,
+    "showProperties": true,
+    "showReferences": true,
+    "showStructs": true,
+    "showTypeParameters": true,
+    "showUnits": true,
+    "showUsers": true,
+    "showValues": true,
+    "showVariables": true
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "tailwindCSS.validate": true,
+  "tailwindCSS.files.exclude": [
+    "**/.git/**",
+    "**/.svn/**",
+    "**/.hg/**",
+    "**/bower_components/**",
+    "**/node_modules/**"
+  ],
+  "tailwindCSS.experimental.configFile": "tailwind.config.js"
+}
