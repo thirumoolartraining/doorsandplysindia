@@ -1,28 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { ProductCard } from './ProductCard';
 import { ProductSkeleton } from './ProductSkeleton';
 import { products } from '../data/products';
+import { Product } from '../types/product';
 
 interface ProductGridProps {
   loading?: boolean;
   onProductClick?: (productId: string) => void;
-  onRequestQuote?: (productId: string) => void;
-  onNavigateToQuote?: (productId: string, productName: string) => void;
   filteredProducts?: Product[];
 }
 
 export const ProductGrid: React.FC<ProductGridProps> = ({ 
   loading = false, 
   onProductClick,
-  onRequestQuote,
-  onNavigateToQuote,
   filteredProducts
 }) => {
-  const handleRequestQuote = (product: any) => {
-    onRequestQuote?.(product.id);
-  };
-
   const productsToShow = filteredProducts || products;
 
   if (loading) {
@@ -51,11 +44,15 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: parseInt(product.id) * 0.1 }}
         >
-          <ProductCard
-            product={product}
-            onRequestQuote={handleRequestQuote}
-            onNavigateToQuote={onNavigateToQuote}
-          />
+          <div onClick={() => onProductClick?.(product.id)}>
+            <ProductCard
+              product={product}
+              onAddToCart={(e) => {
+                e.stopPropagation();
+                onProductClick?.(product.id);
+              }}
+            />
+          </div>
         </motion.div>
       ))}
     </motion.div>

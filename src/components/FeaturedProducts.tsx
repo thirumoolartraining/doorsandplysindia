@@ -61,10 +61,33 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
               </div>
 
               <div className="mt-auto">
-                <div className="flex justify-between items-center mb-6">
-                  <span className="text-2xl font-bold text-[#C3A572]">
-                    {product.exportPrice || product.price}
-                  </span>
+                <div className="mb-6">
+                  {product.exportPrice ? (
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-2xl font-bold text-[#4B3A2A]">
+                        {product.price}
+                      </span>
+                      <span className="text-sm text-[#4B3A2A]/80 font-medium">
+                        (INR)
+                      </span>
+                      <span className="mx-2 text-[#4B3A2A]/30">|</span>
+                      <span className="text-2xl font-bold text-[#C3A572]">
+                        {product.exportPrice}
+                      </span>
+                      <span className="text-sm text-[#C3A572]/80 font-medium">
+                        (USD)
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-2xl font-bold text-[#4B3A2A]">
+                        {product.price}
+                      </span>
+                      <span className="text-sm text-[#4B3A2A]/80 font-medium">
+                        (INR)
+                      </span>
+                    </div>
+                  )}
                 </div>
                 <Button 
                   variant="default" 

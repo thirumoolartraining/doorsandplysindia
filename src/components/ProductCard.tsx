@@ -8,18 +8,24 @@ import { Product } from '../types/product';
 
 interface ProductCardProps {
   product: Product;
+  onAddToCart?: (e: React.MouseEvent) => void;
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ 
-  product 
+  product,
+  onAddToCart
 }) => {
   const { addToCart, getCartItem } = useCartStore();
   const cartItem = getCartItem(product.id);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
-    addToCart(product, 1); // Default quantity to 1
-    toast.success(`🛒 Added ${product.name} to cart`);
+    if (onAddToCart) {
+      onAddToCart(e);
+    } else {
+      addToCart(product, 1); // Default quantity to 1
+      toast.success(`🛒 Added ${product.name} to cart`);
+    }
   };
 
   return (
@@ -137,17 +143,25 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         )}
 
         {/* Pricing Section */}
-        <div className="space-y-2 py-2">
-          <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-[#4B3A2A]">
-              {product.price}
-            </span>
-            <span className="text-sm text-[#4B3A2A]/60 font-medium">
-              Domestic
-            </span>
-          </div>
-          {product.exportPrice && (
-            <div className="flex items-baseline gap-2">
+        <div className="space-y-3 py-2">
+          {product.exportPrice ? (
+            // Show both INR and USD for export products
+            <div className="space-y-2">
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold text-[#4B3A2A]">
+                  {product.price}
+                </span>
+                <span className="text-sm text-[#4B3A2A]/80 font-medium">
+                  (INR)
+                </span>
+                <span className="mx-2 text-[#4B3A2A]/30">|</span>
+                <span className="text-2xl font-bold text-[#C3A572]">
+                  {product.exportPrice}
+                </span>
+                <span className="text-sm text-[#C3A572]/80 font-medium">
+                  (USD)
+                </span>
+              </div>
               <div className="flex items-center gap-2">
                 {product.exportAvailable && (
                   <div className="flex items-center gap-1 text-xs text-[#4B3A2A] bg-[#F5F5F0] px-2 py-1 rounded border border-[#E0D6C3]">
@@ -160,13 +174,17 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                     <span>FSC Certified</span>
                   </div>
                 )}
-                <span className="text-lg font-semibold text-[#C3A572]">
-                  {product.exportPrice}
-                </span>
-                <span className="text-sm text-[#C3A572]/80 font-medium">
-                  Export Price
-                </span>
               </div>
+            </div>
+          ) : (
+            // Show only INR for domestic products
+            <div className="flex items-baseline gap-2">
+              <span className="text-2xl font-bold text-[#4B3A2A]">
+                {product.price}
+              </span>
+              <span className="text-sm text-[#4B3A2A]/80 font-medium">
+                (INR)
+              </span>
             </div>
           )}
           {product.leadTime && (
