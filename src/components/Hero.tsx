@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button } from './Button';
-import logo from '../../public/logo.png';
 
 interface HeroProps {
   onNavigate?: (page: 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about', productId?: string) => void;
@@ -19,19 +18,6 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate }) => {
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
 
-      {/* Logo - Positioned in top-left corner */}
-      <div className="absolute top-8 left-8 z-20">
-        <div className="bg-white/90 backdrop-blur-sm p-3 rounded-xl shadow-xl">
-          <img 
-            src={logo} 
-            alt="Doors & Plys India Logo" 
-            className="h-12 w-auto object-contain"
-            onError={(e) => {
-              console.error('Failed to load logo from:', e.currentTarget.src);
-            }}
-          />
-        </div>
-      </div>
       
       {/* Main Content - Centered */}
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto pt-24">
