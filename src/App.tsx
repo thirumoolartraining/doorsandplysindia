@@ -93,7 +93,7 @@ function App() {
             <Navigation onNavigate={navigateTo} />
             <main role="main">
               <Hero onNavigate={navigateTo} />
-              <ProductCategories />
+              <ProductCategories onNavigate={navigateTo} />
               <FeaturedProducts onNavigate={navigateTo} />
               <WhyChooseUs />
               <Testimonials />

@@ -2,31 +2,41 @@ import React from 'react';
 import { Card } from './Card';
 import { DoorOpen as Door, Move, Home, Layers } from 'lucide-react';
 
-export const ProductCategories: React.FC = () => {
+type PageType = 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'shipping-policy' | 'cancellation-refund-policy' | 'contact';
+
+interface ProductCategoriesProps {
+  onNavigate?: (page: PageType, productId?: string) => void;
+}
+
+export const ProductCategories: React.FC<ProductCategoriesProps> = ({ onNavigate }) => {
   const categories = [
     {
+      id: '1', // ID from products data for UPVC Sliding Door System
       icon: Door,
       title: 'UPVC Sliding Doors',
       description: 'Space-saving sliding doors with superior weather sealing',
-      image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+      image: '/images/products/upvc-sliding-door-system/2.png'
     },
     {
+      id: '2', // ID from products data for UPVC Casement Door Set
       icon: Home,
       title: 'UPVC Casement Doors',
       description: 'Classic hinged doors with multi-point locking',
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+      image: '/images/products/upvc-casement-door/2.png'
     },
     {
+      id: '3', // ID from products data for UPVC French Door System
       icon: Layers,
       title: 'UPVC French Doors',
       description: 'Elegant double doors with maximum natural light',
-      image: 'https://images.unsplash.com/photo-1534595038511-9f219fe0c979?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+      image: '/images/products/upvc-french-door/2.png'
     },
     {
+      id: '4', // ID from products data for UPVC Bi-Fold Door System
       icon: Move,
       title: 'UPVC Folding Doors',
       description: 'Bi-fold systems for wide openings and modern spaces',
-      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+      image: '/images/products/upvc-bi-fold-door/2.png'
     }
   ];
 
@@ -46,22 +56,21 @@ export const ProductCategories: React.FC = () => {
           {categories.map((category, index) => (
             <Card key={index} variant="basic">
               <div 
-                className="h-56 bg-cover bg-center rounded-xl mb-6 overflow-hidden"
+                className="h-56 w-full bg-cover bg-center rounded-xl mb-6 overflow-hidden"
                 style={{ backgroundImage: `url(${category.image})` }}
-              >
-                <div className="h-full bg-black/30 backdrop-blur-sm flex items-center justify-center transition-all duration-300 hover:bg-black/20">
-                  <category.icon className="w-16 h-16 text-white drop-shadow-lg" />
-                </div>
-              </div>
+              />
               <h3 className="text-xl font-bold text-[#4B3A2A] mb-4 tracking-tight leading-tight">
                 {category.title}
               </h3>
               <p className="text-[#1A1A1A]/70 mb-6 leading-relaxed">
                 {category.description}
               </p>
-              <a href="#" className="text-[#C3A572] font-semibold hover:text-[#4B3A2A] transition-colors duration-300 inline-flex items-center gap-2">
+              <button 
+                onClick={() => onNavigate?.('product-detail', category.id)}
+                className="text-[#C3A572] font-semibold hover:text-[#4B3A2A] transition-colors duration-300 inline-flex items-center gap-2 focus:outline-none"
+              >
                 Learn More →
-              </a>
+              </button>
             </Card>
           ))}
         </div>
