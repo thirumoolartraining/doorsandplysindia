@@ -74,9 +74,6 @@ export const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ onNavigate }
                       <span className="text-2xl font-bold text-[#C3A572]">
                         {product.exportPrice}
                       </span>
-                      <span className="text-sm text-[#C3A572]/80 font-medium">
-                        (USD)
-                      </span>
                     </div>
                   ) : (
                     <div className="flex items-baseline gap-2">
