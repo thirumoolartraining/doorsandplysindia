@@ -2,7 +2,7 @@ import React from 'react';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 import { Button } from './Button';
 import { useCartStore } from '../store/cart';
-import logo from '../../public/logo.png';
+// Logo is in the public directory, so we can reference it directly
 
 interface NavigationProps {
   onNavigate?: (page: 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'contact', productId?: string) => void;
@@ -33,14 +33,16 @@ export const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
               className="cursor-pointer h-12 w-48 flex items-center"
               onClick={() => onNavigate?.('home')}
             >
-              <img 
-                src={logo} 
-                alt="Doors & Plys India Logo" 
-                className="h-full w-auto object-contain"
-                onError={(e) => {
-                  console.error('Failed to load logo from:', e.currentTarget.src);
-                }}
-              />
+              <div className="flex items-center">
+                <img 
+                  src="/logo.png" 
+                  alt="Doors & Plys India Logo" 
+                  className="h-10 w-auto object-contain"
+                  onError={(e) => {
+                    console.error('Failed to load logo from:', e.currentTarget.src);
+                  }}
+                />
+              </div>
             </div>
           </div>
 

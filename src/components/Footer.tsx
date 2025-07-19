@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from './Button';
 import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import { CONTACT_INFO } from '../constants/contact';
-import logo from '../../public/logo.png';
+// Logo is in the public directory, so we can reference it directly
 
 interface FooterProps {
   onNavigate?: (page: 'privacy-policy' | 'terms-and-conditions' | 'shipping-policy' | 'cancellation-refund-policy' | 'home' | 'products' | 'export' | 'about' | 'contact') => void;
@@ -37,11 +37,11 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           {/* Brand */}
           <section aria-labelledby="brand-heading" className="space-y-4">
             <h3 id="brand-heading" className="sr-only">Brand Information</h3>
-            <div className="flex items-center">
+            <div className="flex flex-col items-center md:items-start">
               <img 
-                src={logo} 
+                src="/logo.png" 
                 alt="Doors & Plys India Logo" 
-                className="h-10 w-auto object-contain"
+                className="h-12 w-auto mb-6"
                 onError={(e) => {
                   console.error('Failed to load logo from:', e.currentTarget.src);
                 }}

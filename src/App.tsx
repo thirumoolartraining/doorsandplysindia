@@ -28,7 +28,11 @@ function App() {
   const [currentProductId, setCurrentProductId] = useState<string>('1');
 
   const navigateTo = (page: 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'shipping-policy' | 'cancellation-refund-policy' | 'contact', productId?: string) => {
+    // Scroll to top of the page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Update the current page
     setCurrentPage(page);
+    // Update product ID if provided
     if (productId) {
       setCurrentProductId(productId);
     }
@@ -63,7 +67,7 @@ function App() {
           <>
             <Hero />
             <ProductCategories />
-            <FeaturedProducts />
+            <FeaturedProducts onNavigate={navigateTo} />
             <WhyChooseUs />
             <Testimonials />
             <ExportBanner />
@@ -90,7 +94,7 @@ function App() {
             <main role="main">
               <Hero onNavigate={navigateTo} />
               <ProductCategories />
-              <FeaturedProducts />
+              <FeaturedProducts onNavigate={navigateTo} />
               <WhyChooseUs />
               <Testimonials />
               <ExportBanner />
