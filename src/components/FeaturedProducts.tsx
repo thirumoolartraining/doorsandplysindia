@@ -8,25 +8,25 @@ export const FeaturedProducts: React.FC = () => {
       name: 'UPVC Sliding Door',
       description: 'Premium sliding door with weather sealing',
       price: '$102',
-      image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+      image: '/images/products/upvc-sliding-door-system/1.png'
     },
     {
       name: 'UPVC Casement Door',
       description: 'Classic hinged door with multi-point lock',
       price: '$76',
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+      image: '/images/products/upvc-casement-door/1.png'
     },
     {
       name: 'UPVC French Door',
       description: 'Elegant double door with full glazing',
       price: '$156',
-      image: 'https://images.unsplash.com/photo-1534595038511-9f219fe0c979?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+      image: '/images/products/upvc-french-door/1.png'
     },
     {
       name: 'UPVC Bi-Fold Door',
       description: 'Space-saving folding door system',
       price: '$222',
-      image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+      image: '/images/products/upvc-bi-fold-door/1.png'
     }
   ];
 
