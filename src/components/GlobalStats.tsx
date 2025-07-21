@@ -14,7 +14,7 @@ export const GlobalStats: React.FC = () => {
       icon: Award,
       number: 'FSC & ISO',
       label: 'Certified',
-      description: 'International quality standards'
+      description: 'Committed to Quality'
     },
     {
       icon: Package,

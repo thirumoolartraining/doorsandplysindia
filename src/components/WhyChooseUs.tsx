@@ -13,9 +13,9 @@ export const WhyChooseUs: React.FC = () => {
     },
     {
       icon: Award,
-      number: 'ISO & FSC',
+      number: 'Globally Recognized',
       label: 'Certified',
-      description: 'International quality standards'
+      description: 'Committed to Quality'
     },
     {
       icon: Package,

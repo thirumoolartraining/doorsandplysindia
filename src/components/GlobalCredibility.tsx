@@ -12,7 +12,7 @@ export const GlobalCredibility: React.FC = () => {
     },
     {
       icon: Award,
-      number: 'ISO & FSC',
+      number: 'Globally Recognized',
       label: 'Certified',
       description: 'International quality and sustainability standards'
     },
