@@ -1,12 +1,12 @@
 import React from 'react';
 import { Navigation } from '../components/Navigation';
 import { Breadcrumb } from '../components/Breadcrumb';
-import { ProductsFooter } from '../components/ProductsFooter';
+// Removed unused import
 import { Shield, Lock, Eye, FileText } from 'lucide-react';
 import { CONTACT_INFO } from '../constants/contact';
 
 interface PrivacyPolicyProps {
-  onNavigate?: (page: 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy', productId?: string) => void;
+  onNavigate?: (page: 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'contact', productId?: string) => void;
 }
 
 export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onNavigate }) => {
@@ -156,10 +156,10 @@ export const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onNavigate }) => {
                   <strong>Response Time:</strong> We will respond to all privacy-related requests within 30 days. 
                   For urgent matters, please contact us directly at{' '}
                   <a 
-                    href="mailto:info@doorsandplysindia.shop" 
+                    href="mailto:info@doorsandplysindia.com" 
                     className="text-[#C3A572] hover:text-[#4B3A2A] transition-colors duration-200 underline"
                   >
-                    info@doorsandplysindia.shop
+                    info@doorsandplysindia.com
                   </a>
                 </p>
               </div>
