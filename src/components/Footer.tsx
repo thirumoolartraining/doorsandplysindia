@@ -1,35 +1,27 @@
 import React from 'react';
-import { Button } from './Button';
+import { Link, useLocation } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
 import { CONTACT_INFO } from '../constants/contact';
 import logo from '../../public/logo.png';
 import { Container } from './Container';
 
-interface FooterProps {
-  onNavigate?: (page: 'privacy-policy' | 'terms-and-conditions' | 'shipping-policy' | 'cancellation-refund-policy' | 'home' | 'products' | 'export' | 'about' | 'contact') => void;
-}
-
-export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
-  const quickLinks = [
-    { label: 'Home', page: 'home' },
-    { label: 'Products', page: 'products' },
-    { label: 'Export', page: 'export' },
-    { label: 'About', page: 'about' },
-    { label: 'Contact', page: 'contact' }
-  ];
-  const legalLinks = ['Privacy Policy', 'Terms of Service', 'Shipping Policy', 'Return Policy'];
+export const Footer: React.FC = () => {
+  const location = useLocation();
   
-  const handleLegalLinkClick = (link: string) => {
-    if (link === 'Privacy Policy') {
-      onNavigate?.('privacy-policy');
-    } else if (link === 'Terms of Service') {
-      onNavigate?.('terms-and-conditions');
-    } else if (link === 'Shipping Policy') {
-      onNavigate?.('shipping-policy');
-    } else if (link === 'Return Policy') {
-      onNavigate?.('cancellation-refund-policy');
-    }
-  };
+  const quickLinks = [
+    { label: 'Home', path: '/' },
+    { label: 'Products', path: '/products' },
+    { label: 'Export', path: '/export' },
+    { label: 'About', path: '/about' },
+    { label: 'Contact', path: '/contact' }
+  ];
+  
+  const legalLinks = [
+    { label: 'Privacy Policy', path: '/privacy-policy' },
+    { label: 'Terms of Service', path: '/terms-and-conditions' },
+    { label: 'Shipping Policy', path: '/shipping-policy' },
+    { label: 'Return Policy', path: '/cancellation-refund-policy' }
+  ];
 
   return (
     <footer role="contentinfo" className="bg-[#4B3A2A] text-white pt-16 pb-8">
@@ -51,19 +43,35 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <p className="text-white/80 text-sm">
               Premium UPVC doors and building materials manufacturer and exporter since 1995.
             </p>
-            <div className="flex gap-3 pt-2">
-              <Button variant="settings" aria-label="Facebook">
-                <Facebook className="w-5 h-5" />
-              </Button>
-              <Button variant="settings" aria-label="Twitter">
-                <Twitter className="w-5 h-5" />
-              </Button>
-              <Button variant="settings" aria-label="Instagram">
-                <Instagram className="w-5 h-5" />
-              </Button>
-              <Button variant="settings" aria-label="LinkedIn">
-                <Linkedin className="w-5 h-5" />
-              </Button>
+            <div className="flex space-x-4">
+              <a 
+                href="#" 
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
+                aria-label="Facebook"
+              >
+                <Facebook className="w-4 h-4" />
+              </a>
+              <a 
+                href="#" 
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
+                aria-label="Twitter"
+              >
+                <Twitter className="w-4 h-4" />
+              </a>
+              <a 
+                href="#" 
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-4 h-4" />
+              </a>
+              <a 
+                href="#" 
+                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-300"
+                aria-label="LinkedIn"
+              >
+                <Linkedin className="w-4 h-4" />
+              </a>
             </div>
           </section>
 
@@ -72,13 +80,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
-                <li key={link.label}>
-                  <button 
-                    onClick={() => onNavigate?.(link.page as any)}
-                    className="text-white/80 hover:text-white transition-colors text-left w-full"
+                <li key={link.path}>
+                  <Link
+                    to={link.path}
+                    className={`${
+                      location.pathname === link.path 
+                        ? 'text-white font-medium' 
+                        : 'text-white/70 hover:text-white'
+                    } transition-colors duration-300 text-sm block py-1`}
                   >
                     {link.label}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -89,13 +101,17 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <h4 className="text-lg font-semibold mb-4">Legal</h4>
             <ul className="space-y-2">
               {legalLinks.map((link) => (
-                <li key={link}>
-                  <button 
-                    onClick={() => handleLegalLinkClick(link)}
-                    className="text-white/80 hover:text-white transition-colors text-left"
+                <li key={link.path}>
+                  <Link
+                    to={link.path}
+                    className={`${
+                      location.pathname === link.path 
+                        ? 'text-white font-medium' 
+                        : 'text-white/70 hover:text-white'
+                    } transition-colors duration-300 text-sm block py-1`}
                   >
-                    {link}
-                  </button>
+                    {link.label}
+                  </Link>
                 </li>
               ))}
             </ul>

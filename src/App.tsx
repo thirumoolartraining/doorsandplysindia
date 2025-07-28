@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { CartDrawer } from './components/CartDrawer';
 import { Toast } from './components/Toast';
 import { Navigation } from './components/Navigation';
@@ -22,75 +22,45 @@ import { ShippingPolicy } from './pages/ShippingPolicy';
 import { CancellationRefundPolicy } from './pages/CancellationRefundPolicy';
 import { Contact } from './pages/Contact';
 import { ScrollToTop, ScrollToTopButton } from './components/ScrollToTop';
+import { useEffect } from 'react';
 
-function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'shipping-policy' | 'cancellation-refund-policy' | 'contact'>('home');
-  const [currentProductId, setCurrentProductId] = useState<string>('1');
+// This component will handle the main app content with routing
+const AppContent = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const navigateTo = (page: 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'shipping-policy' | 'cancellation-refund-policy' | 'contact', productId?: string) => {
-    // Scroll to top of the page
+  // Scroll to top on route change
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // Update the current page
-    setCurrentPage(page);
-    // Update product ID if provided
-    if (productId) {
-      setCurrentProductId(productId);
+  }, [location.pathname]);
+
+  // For backward compatibility with existing navigation
+  const navigateTo = (page: string, productId?: string) => {
+    if (page === 'product-detail' && productId) {
+      navigate(`/products/${productId}`);
+    } else if (page === 'home') {
+      navigate('/');
+    } else {
+      navigate(`/${page}`);
     }
   };
 
-  const renderPageContent = () => {
-    switch (currentPage) {
-      case 'product-detail':
-        return <ProductDetailPage productId={currentProductId} onNavigate={navigateTo} />;
-      case 'products':
-        return <Products onNavigate={navigateTo} />;
-      case 'export':
-        return <Export onNavigate={navigateTo} />;
-      case 'quote':
-        return <Quote onNavigate={navigateTo} />;
-      case 'checkout':
-        return <Checkout onNavigate={navigateTo} />;
-      case 'about':
-        return <About onNavigate={navigateTo} />;
-      case 'privacy-policy':
-        return <PrivacyPolicy onNavigate={navigateTo} />;
-      case 'terms-and-conditions':
-        return <TermsAndConditions onNavigate={navigateTo} />;
-      case 'shipping-policy':
-        return <ShippingPolicy onNavigate={navigateTo} />;
-      case 'cancellation-refund-policy':
-        return <CancellationRefundPolicy onNavigate={navigateTo} />;
-      case 'contact':
-        return <Contact onNavigate={navigateTo} />;
-      default:
-        return (
-          <>
-            <Hero />
-            <ProductCategories />
-            <FeaturedProducts onNavigate={navigateTo} />
-            <WhyChooseUs />
-            <Testimonials />
-            <ExportBanner />
-            <QuoteCTA />
-            <Footer />
-          </>
-        );
-    }
+  // Helper to pass navigation to components that expect it
+  const withNavigation = (Component: React.ComponentType<any>) => {
+    return <Component onNavigate={navigateTo} />;
   };
 
   return (
-    <>
-      {/* Global components that should appear on all pages */}
+    <div className="min-h-screen bg-[#F5F5F5] font-inter antialiased">
       <ScrollToTop />
       <ScrollToTopButton />
-      <CartDrawer onNavigate={navigateTo} />
       <Toast />
+      <CartDrawer onNavigate={navigateTo} />
       
-      {/* Page-specific content */}
-      <div className="min-h-screen bg-[#F5F5F5] font-inter antialiased" role="application" aria-label="Doors & Plys India Website">
-        {currentPage === 'home' ? (
+      <Routes>
+        <Route path="/" element={
           <>
-            <Navigation onNavigate={navigateTo} />
+            <Navigation />
             <main role="main">
               <Hero onNavigate={navigateTo} />
               <ProductCategories onNavigate={navigateTo} />
@@ -100,13 +70,57 @@ function App() {
               <ExportBanner />
               <QuoteCTA />
             </main>
-            <Footer onNavigate={navigateTo} />
+            <Footer />
           </>
-        ) : (
-          renderPageContent()
-        )}
-      </div>
-    </>
+        } />
+        
+        <Route path="/products" element={withNavigation(Products)} />
+        <Route path="/products/:productId" element={
+          (() => {
+            // This is a workaround to pass the productId from URL params to the component
+            // In a real app, you might want to use a proper data loader
+            const ProductDetailWrapper = () => {
+              const { productId } = useParams();
+              return <ProductDetailPage productId={productId || '1'} onNavigate={navigateTo} />;
+            };
+            return <ProductDetailWrapper />;
+          })()
+        } />
+        <Route path="/export" element={withNavigation(Export)} />
+        <Route path="/quote" element={withNavigation(Quote)} />
+        <Route path="/checkout" element={withNavigation(Checkout)} />
+        <Route path="/about" element={withNavigation(About)} />
+        <Route path="/privacy-policy" element={withNavigation(PrivacyPolicy)} />
+        <Route path="/terms-and-conditions" element={withNavigation(TermsAndConditions)} />
+        <Route path="/shipping-policy" element={withNavigation(ShippingPolicy)} />
+        <Route path="/cancellation-refund-policy" element={withNavigation(CancellationRefundPolicy)} />
+        <Route path="/contact" element={withNavigation(Contact)} />
+        
+        {/* 404 - Not Found */}
+        <Route path="*" element={
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="text-center">
+              <h1 className="text-4xl font-bold mb-4">404 - Page Not Found</h1>
+              <button 
+                onClick={() => navigateTo('home')}
+                className="px-4 py-2 bg-[#4B3A2A] text-white rounded hover:bg-[#5a4a3a] transition-colors"
+              >
+                Go to Home
+              </button>
+            </div>
+          </div>
+        } />
+      </Routes>
+    </div>
+  );
+};
+
+// Main App component that wraps everything with Router
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   );
 }
 

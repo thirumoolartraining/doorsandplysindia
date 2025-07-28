@@ -4,23 +4,21 @@ import { Button } from './Button';
 import { useCartStore } from '../store/cart';
 import logo from '../../public/logo.png';
 import { Container } from './Container';
+import { Link, useLocation } from 'react-router-dom';
 
-interface NavigationProps {
-  onNavigate?: (page: 'home' | 'products' | 'product-detail' | 'export' | 'quote' | 'checkout' | 'about' | 'privacy-policy' | 'terms-and-conditions' | 'contact', productId?: string) => void;
-}
-
-export const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
+export const Navigation: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const { getTotalItems, toggleCart } = useCartStore();
   const totalItems = getTotalItems();
 
+  const location = useLocation();
   const navItems = [
-    { label: 'Home', action: () => onNavigate?.('home') },
-    { label: 'Products', action: () => onNavigate?.('products') },
-    { label: 'Export', action: () => onNavigate?.('export') },
-    { label: 'Quote', action: () => onNavigate?.('quote') },
-    { label: 'About', action: () => onNavigate?.('about') },
-    { label: 'Contact', action: () => onNavigate?.('contact') },
+    { label: 'Home', path: '/' },
+    { label: 'Products', path: '/products' },
+    { label: 'Export', path: '/export' },
+    { label: 'Quote', path: '/quote' },
+    { label: 'About', path: '/about' },
+    { label: 'Contact', path: '/contact' },
   ];
 
   return (
@@ -30,10 +28,7 @@ export const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
           <div className="flex justify-between items-center h-20">
             {/* Logo */}
             <div className="flex items-center">
-              <div 
-                className="cursor-pointer h-12 w-48 flex items-center"
-                onClick={() => onNavigate?.('home')}
-              >
+              <Link to="/" className="h-12 w-48 flex items-center">
                 <img 
                   src={logo} 
                   alt="Doors & Plys India Logo" 
@@ -42,20 +37,23 @@ export const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
                     console.error('Failed to load logo from:', e.currentTarget.src);
                   }}
                 />
-              </div>
+              </Link>
             </div>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => (
-                <button
-                  key={item.label}
-                  onClick={item.action}
-                  className="text-[#1A1A1A] hover:text-[#4B3A2A] transition-colors duration-300 font-medium tracking-tight px-3 py-2 rounded-lg hover:bg-white/10"
-                >
-                  {item.label}
-                </button>
-              ))}
+              {navItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <Link
+                    key={item.label}
+                    to={item.path}
+                    className={`${isActive ? 'text-[#4B3A2A] font-semibold' : 'text-[#1A1A1A] hover:text-[#4B3A2A]'} transition-colors duration-300 text-sm uppercase tracking-wider`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
               <Button 
                 variant="settings" 
                 onClick={toggleCart}
@@ -71,35 +69,45 @@ export const Navigation: React.FC<NavigationProps> = ({ onNavigate }) => {
               </Button>
             </div>
 
-            {/* Mobile Menu Button */}
+            {/* Mobile menu button */}
             <div className="md:hidden">
-              <Button
-                variant="settings"
+              <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+                className="text-[#1A1A1A] hover:text-[#4B3A2A] focus:outline-none"
                 aria-expanded={isMenuOpen}
+                aria-controls="mobile-menu"
               >
-                {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </Button>
+                {isMenuOpen ? (
+                  <X className="h-6 w-6" aria-hidden="true" />
+                ) : (
+                  <Menu className="h-6 w-6" aria-hidden="true" />
+                )}
+              </button>
             </div>
           </div>
 
-          {/* Mobile Menu */}
+          {/* Mobile menu */}
           {isMenuOpen && (
-            <div className="md:hidden bg-white/90 backdrop-blur-md rounded-2xl mt-4 mb-4 p-6 border border-white/20 shadow-xl" role="menu" aria-label="Mobile navigation menu">
-              {navItems.map((item) => (
-                <button
-                  key={item.label}
-                  onClick={() => {
-                    item.action();
-                    setIsMenuOpen(false);
-                  }}
-                  className="block w-full text-left py-3 px-4 text-[#1A1A1A] hover:text-[#4B3A2A] hover:bg-white/20 transition-all duration-300 font-medium rounded-lg"
-                  role="menuitem"
-                >
-                  {item.label}
-                </button>
-              ))}
+            <div className="md:hidden" id="mobile-menu">
+              <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/95 rounded-lg shadow-lg mt-2">
+                {navItems.map((item) => {
+                  const isActive = location.pathname === item.path;
+                  return (
+                    <Link
+                      key={item.label}
+                      to={item.path}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`block w-full text-left px-3 py-2 text-base font-medium rounded-md ${
+                        isActive 
+                          ? 'text-[#4B3A2A] font-semibold bg-[#F5F5F5]' 
+                          : 'text-[#1A1A1A] hover:bg-[#F5F5F5]'
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           )}
         </Container>
